@@ -22,11 +22,11 @@ const ScatterPlot: React.FC = () => {
       download: true,
       header: false,
       complete: (results) => {
-        const parsedData = results.data.map((row: any) => ({
-          x: parseFloat(row[0]),
-          y: parseFloat(row[1]),
-          label: row[2],
-        }));
+        const parsedData = (results.data as string[][]).map((row) => ({
+            x: parseFloat(row[0]),
+            y: parseFloat(row[1]),
+            label: row[2] as string,
+          }));
         setData(parsedData);
         setSelectedPoint(null); // Reset selected point on dataset switch
       },
@@ -35,8 +35,8 @@ const ScatterPlot: React.FC = () => {
 
   useEffect(() => {
     loadData(currentDataset);
-  }, [currentDataset]);
-
+  }, [currentDataset]); 
+  
   useEffect(() => {
     const canvas = canvasRef.current;
     if (canvas && data.length > 0) {
